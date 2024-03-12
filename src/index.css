@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&family=Lexend+Deca:wght@100;200;300;400;500;600;700&family=Poppins:wght@300;400;600&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+html{
+  font-size: 62.5%;
+}
+
+table {
+  margin: 3rem auto;
+  border-radius: 1rem;
+  border: 1rem hidden  solid #d3d2d8;
+  border-collapse: collapse;
+  box-shadow: 0 0 0 1px black;
+  overflow: hidden;
+  max-width: 60rem;
+}
+
+li, p, a, td{
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+thead {
+  font-size: 1.8rem;
+  /* background-color: #443C68; */
+  color: #181717;
+}
+
+th,
+td {
+  border: 1px solid #d3d2d8;
+  min-width: 20rem;
+  padding: 1.5rem;
+  line-height: 1.7;
+}
+
+td {
+  font-size: 1.4rem;
+}
+
+.headstyling{
+  text-align: center;
+margin-top: 1rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
