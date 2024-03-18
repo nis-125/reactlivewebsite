@@ -1,13 +1,6 @@
-import {useEffect, useState} from "react";
-import UserData from "./components/UserData.jsx";
-import Datepicker from "./components/Datepicker.jsx";
-import SearchBar from "./components/SearchBar.jsx";
-import SearchBar2 from "./components/SearchBar2.jsx";
-// import { SearchBar } from "./components/SearchBar";
-// import { SearchResultsList } from "./components/SearchResultsList";
+import React, { useState, useEffect } from 'react';
+import './SearchBar.css'; // Import the CSS file
 
-const API = "https://jsonplaceholder.typicode.com/users";
-//---remove hardcoding
 const jsonData = [
     {
         "name": "",
@@ -104,7 +97,7 @@ const jsonData = [
         "designation": "cxvxv",
         "division": "xxx",
         "phoneNo": "56232",
-        "programCode": "56888",
+        "programCode": "5455",
         "time": "13:04:21",
         "date": "2024-03-17"
     },
@@ -115,7 +108,7 @@ const jsonData = [
         "designation": "dfvdGH",
         "division": "hgh",
         "phoneNo": "hghg",
-        "programCode": "56888",
+        "programCode": "ghg",
         "time": "13:04:21",
         "date": "2024-03-17"
     },
@@ -126,7 +119,7 @@ const jsonData = [
         "designation": "",
         "division": "",
         "phoneNo": "",
-        "programCode": "56888",
+        "programCode": "",
         "time": "16:16:45",
         "date": "2024-03-17"
     },
@@ -154,71 +147,59 @@ const jsonData = [
     }
     // Add the rest of your JSON data here
 ];
-///remove hardcoding
-const App = () => {
-    const [selectedProgramCode, setSelectedProgramCode] = useState('');
-    const handleSelectProgramCode = (programCode) => {
-        console.log("Program Code",programCode);
-        setSelectedProgramCode(programCode);
-      };
-    const [users, setUsers] = useState([]);
-    const [results, setResults] = useState([]);
-    //--uncomment
-    // const fetchUsers = async (url) => {
-    //     try {
-    //         const res = await fetch(url);
-    //         const data = await res.json();
-    //         if (data.length > 0) {
-    //             setUsers(data);
-    //         }
-    //         console.log(data);
-    //     } catch (e) {
-    //         console.error(e)
-    //     }
-    // }
 
+function SearchBar() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [showResults, setShowResults] = useState(false); // New state to control displaying search results
 
-    // useEffect(() => {
-    //     fetchUsers(API);
-    // }, [])
-    //uncomment
-    useEffect(() => {
-        setUsers(jsonData);
-    }, []);
-    return <>
-    <div className="container">
-   <h1 className="headstyling">SMART ATTENDANCE SYSTEM</h1>
-   <div className="row">
-   <label htmlFor="searchbar2" className="label-style">Select Program Code:</label>
-   <SearchBar2 id="searchbar2" onSelectProgramCode={handleSelectProgramCode}/>
-   </div>
-   <div className="row">
-    <div className="row">
-   <label htmlFor="datepicker" className="label-style">Select Date:</label>
-   <Datepicker id="datepicker"/>
-   </div>
-   <div className="row">
-   <label htmlFor="searchbar" className="label-style">Select Pbno:</label>
-                <SearchBar id="searchbar"/>
-                </div>
-            </div>
-        {selectedProgramCode &&(<table>
-            <thead>
-            <tr>
-                <th>PB No.</th>
-                <th>Name</th>
-                <th>Designation</th>
-                <th>Division</th>
-                <th>Phone-No</th>
-                <th>Date</th>
-            </tr>
-            </thead>
-            <tbody>
-            <UserData users={users} programC={selectedProgramCode}/>
-            </tbody>
-        </table>)}
-        </div>
-    </>
+  useEffect(() => {
+    if (searchTerm.trim() === '') {
+      setShowResults(false); // Hide search results if search term is empty
+      return;
+    }
+
+    // Filter the jsonData based on the search term
+    const filteredResults = jsonData.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()));
+
+    setSearchResults(filteredResults);
+    setShowResults(true); // Show search results after filtering data
+  }, [searchTerm]);
+
+  const handleChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSelectOption = (name) => {
+    setSearchTerm(name);
+    setShowResults(false); // Hide search results after selecting an option
+  };
+
+  return (
+    <div className="search-bar-container">
+      <input
+        type="text"
+        className="input-field"
+        placeholder="Search by PB-No..."
+        value={searchTerm}
+        onChange={handleChange}
+        onFocus={() => setShowResults(true)} // Show results when input is focused
+      />
+      {showResults && !loading && (
+        <ul className="result-list">
+          {searchResults.map((user, index) => (
+            <li 
+              key={index} 
+              onClick={() => handleSelectOption(user.name)}
+            >
+              {user.name}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 }
 
-export default App;
+export default SearchBar;

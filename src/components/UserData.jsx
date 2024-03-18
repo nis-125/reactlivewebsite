@@ -1,19 +1,23 @@
-const UserData = ({users}) => {
+const UserData = ({users,programC}) => {
     return (
         <>
             {
                 users.map((curUser) => {
-                    const {id, name, email} = curUser;
-                    const {street, city, zipcode} = curUser.address;
-
+                    const {pbId,name,designation,division,time,date,programCode} = curUser;
+                    if (programC && programCode !== programC) {
+                        return null;
+                      }
+                      else{
                     return (
-                        <tr key={id}>
-                            <td>{id}</td>
+                        <tr key={pbId}>
+                            <td>{pbId}</td>
                             <td>{name}</td>
-                            <td>{email}</td>
-                            <td>{street}, {city}, {" "}, {zipcode}</td>
+                            <td>{designation}</td>
+                            <td>{programCode}</td>
+                            <td>{time}</td>
+                            <td>{date}</td>
                         </tr>
-                    )
+                    )}
                 })
 
             }
